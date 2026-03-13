@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS RP — Command Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="login-container">
+    <div class="login-badge">ER:LC ROLEPLAY NETWORK</div>
+    <div class="login-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,4 56,18 56,42 30,56 4,42 4,18" stroke="#00d4ff" stroke-width="2" fill="none"/>
+          <polygon points="30,12 48,22 48,38 30,48 12,38 12,22" stroke="#00d4ff" stroke-width="1" fill="rgba(0,212,255,0.05)"/>
+          <text x="30" y="35" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="16" fill="#00d4ff">NX</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>NEXUS</h1>
+        <span>COMMAND DASHBOARD</span>
+      </div>
+    </div>
+
+    <div class="login-card">
+      <div class="login-card-header">
+        <div class="status-dot"></div>
+        <span>SECURE ACCESS PORTAL</span>
+      </div>
+
+      <div class="login-form" id="loginForm">
+        <div class="form-group">
+          <label>ROBLOX USERNAME</label>
+          <input type="text" id="loginUsername" placeholder="Enter your username..." autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>ACCESS CODE</label>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+          <div class="form-hint">Default admin code: <code>nexus2024</code></div>
+        </div>
+        <button class="btn-login" onclick="handleLogin()">
+          <span>ENTER DASHBOARD</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="login-error" id="loginError"></div>
+      </div>
+
+      <div class="login-footer">
+        <span>v2.0 — NEXUS FRAMEWORK</span>
+        <span>ER:LC DIVISION NETWORK</span>
+      </div>
+    </div>
+
+    <div class="login-stats">
+      <div class="stat-pill" id="onlineCount">
+        <div class="pulse-dot"></div>
+        <span id="onlineCountVal">0</span> ONLINE
+      </div>
+      <div class="stat-pill">
+        <span id="totalStaffVal">0</span> TOTAL STAFF
+      </div>
+      <div class="stat-pill">
+        <span id="totalPatrolsVal">0</span> PATROLS TODAY
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-page">
+  <div class="bg-grid"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon-sm">
+        <svg viewBox="0 0 40 40" fill="none"><polygon points="20,2 38,12 38,28 20,38 2,28 2,12" stroke="#00d4ff" stroke-width="1.5" fill="none"/><text x="20" y="25" text-anchor="middle" font-family="Rajdhani" font-weight="700" font-size="11" fill="#00d4ff">NX</text></svg>
+      </div>
+      <div>
+        <div class="sidebar-title">NEXUS</div>
+        <div class="sidebar-sub">ER:LC COMMAND</div>
+      </div>
+    </div>
+
+    <div class="sidebar-user" id="sidebarUser">
+      <div class="user-avatar" id="sidebarAvatar">?</div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarName">Loading...</div>
+        <div class="user-rank" id="sidebarRank">—</div>
+      </div>
+      <div class="user-status online"></div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">MAIN</div>
+      <a href="#" class="nav-item active" data-page="overview">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-page="staff">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3.5" stroke="currentColor" stroke-width="1.5"/><path d="M2 16c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Staff Roster
+      </a>
+      <a href="#" class="nav-item" data-page="shifts">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 5v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Shift Logs
+      </a>
+      <a href="#" class="nav-item" data-page="patrols">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L2 6v6l7 4 7-4V6L9 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 2v14M2 6l7 4 7-4" stroke="currentColor" stroke-width="1.5"/></svg>
+        Patrols
+      </a>
+
+      <div class="nav-section-label">COMMAND</div>
+      <a href="#" class="nav-item" data-page="announcements">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6h12l-1.5 7H4.5L3 6z" stroke="currentColor" stroke-width="1.5"/><path d="M1 6h16M6 6V4a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Announcements
+      </a>
+      <a href="#" class="nav-item admin-only" data-page="admin" id="adminNavItem" style="display:none">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1l2 5h5l-4 3 1.5 5L9 11l-4.5 3L6 9 2 6h5L9 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        Admin Panel
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="btn-signout" onclick="handleSignOut()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l3 3-3 3M13 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="breadcrumb">
+          <span id="pageTitle">OVERVIEW</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-clock" id="topbarClock">00:00:00</div>
+        <div class="topbar-online">
+          <div class="pulse-dot"></div>
+          <span id="topbarOnline">0</span> online
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGES -->
+    <div class="page-container">
+
+      <!-- OVERVIEW PAGE -->
+      <div class="page active" id="page-overview">
+        <div class="page-header">
+          <h2>Command Overview</h2>
+          <p>Live statistics and activity for your ER:LC division</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card accent-blue">
+            <div class="stat-icon">👮</div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-totalStaff">0</div>
+              <div class="stat-label">Total Staff</div>
+            </div>
+          </div>
+          <div class="stat-card accent-green">
+            <div class="stat-icon">🟢</div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-onDuty">0</div>
+              <div class="stat-label">On Duty Now</div>
+            </div>
+          </div>
+          <div class="stat-card accent-yellow">
+            <div class="stat-icon">⏱</div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-shiftsToday">0</div>
+              <div class="stat-label">Shifts Today</div>
+            </div>
+          </div>
+          <div class="stat-card accent-red">
+            <div class="stat-icon">🚔</div>
+            <div class="stat-body">
+              <div class="stat-value" id="stat-patrolsToday">0</div>
+              <div class="stat-label">Patrols Today</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Activity</h3>
+            </div>
+            <div class="activity-feed" id="activityFeed">
+              <div class="activity-empty">No recent activity</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Currently On Duty</h3>
+            </div>
+            <div class="duty-list" id="dutyList">
+              <div class="activity-empty">No staff on duty</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Latest Announcements</h3>
+          </div>
+          <div class="announcement-preview" id="announcementPreview">
+            <div class="activity-empty">No announcements</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAFF ROSTER PAGE -->
+      <div class="page" id="page-staff">
+        <div class="page-header">
+          <h2>Staff Roster</h2>
+          <p>Manage all division members and their ranks</p>
+          <button class="btn-primary" onclick="openModal('addStaffModal')">+ Add Staff</button>
+        </div>
+
+        <div class="card">
+          <div class="card-toolbar">
+            <input type="text" class="search-input" placeholder="Search by username or rank..." oninput="filterStaff(this.value)">
+            <select class="filter-select" onchange="filterStaffByRank(this.value)">
+              <option value="">All Ranks</option>
+              <option value="Commissioner">Commissioner</option>
+              <option value="Deputy Commissioner">Deputy Commissioner</option>
+              <option value="Assistant Commissioner">Assistant Commissioner</option>
+              <option value="Chief">Chief</option>
+              <option value="Captain">Captain</option>
+              <option value="Lieutenant">Lieutenant</option>
+              <option value="Sergeant">Sergeant</option>
+              <option value="Corporal">Corporal</option>
+              <option value="Officer">Officer</option>
+              <option value="Cadet">Cadet</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="staffTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Rank</th>
+                  <th>Department</th>
+                  <th>Status</th>
+                  <th>Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="staffTableBody">
+                <tr><td colspan="7" class="table-empty">Loading staff...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIFTS PAGE -->
+      <div class="page" id="page-shifts">
+        <div class="page-header">
+          <h2>Shift Logs</h2>
+          <p>Track on-duty time and shift activity</p>
+          <button class="btn-primary" id="shiftBtn" onclick="toggleShift()">🟢 Start Shift</button>
+        </div>
+
+        <div class="active-shift-banner" id="activeShiftBanner" style="display:none">
+          <div class="shift-banner-info">
+            <div class="pulse-dot large"></div>
+            <div>
+              <div class="shift-banner-title">SHIFT IN PROGRESS</div>
+              <div class="shift-banner-time" id="shiftTimer">00:00:00</div>
+            </div>
+          </div>
+          <button class="btn-danger" onclick="toggleShift()">End Shift</button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>My Shift History</h3>
+            <div class="card-meta" id="myTotalHours">Total: 0h 0m</div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Date</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th></tr>
+              </thead>
+              <tbody id="shiftTableBody">
+                <tr><td colspan="5" class="table-empty">No shifts logged yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card admin-only" id="allShiftsCard" style="display:none">
+          <div class="card-header">
+            <h3>All Staff Shifts</h3>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Staff</th><th>Date</th><th>Duration</th><th>Notes</th></tr>
+              </thead>
+              <tbody id="allShiftTableBody">
+                <tr><td colspan="4" class="table-empty">No shifts found</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PATROLS PAGE -->
+      <div class="page" id="page-patrols">
+        <div class="page-header">
+          <h2>Patrol Logs</h2>
+          <p>Log and review patrol activities in the ER:LC server</p>
+          <button class="btn-primary" onclick="openModal('addPatrolModal')">+ Log Patrol</button>
+        </div>
+
+        <div class="card">
+          <div class="card-toolbar">
+            <input type="text" class="search-input" placeholder="Search patrols..." oninput="filterPatrols(this.value)">
+            <select class="filter-select" onchange="filterPatrolsByType(this.value)">
+              <option value="">All Types</option>
+              <option value="Standard">Standard Patrol</option>
+              <option value="Traffic">Traffic Stop</option>
+              <option value="Pursuit">Vehicle Pursuit</option>
+              <option value="Response">Emergency Response</option>
+              <option value="K9">K9 Unit</option>
+              <option value="SWAT">SWAT Operation</option>
+              <option value="Detective">Detective Work</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="patrolTable">
+              <thead>
+                <tr><th>#</th><th>Officer</th><th>Type</th><th>Description</th><th>Duration</th><th>Date</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="patrolTableBody">
+                <tr><td colspan="7" class="table-empty">No patrols logged</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENTS PAGE -->
+      <div class="page" id="page-announcements">
+        <div class="page-header">
+          <h2>Announcements</h2>
+          <p>Division-wide communications and notices</p>
+          <button class="btn-primary admin-only" id="newAnnouncementBtn" onclick="openModal('addAnnouncementModal')" style="display:none">+ New Announcement</button>
+        </div>
+
+        <div class="announcements-list" id="announcementsList">
+          <div class="activity-empty">No announcements yet</div>
+        </div>
+      </div>
+
+      <!-- ADMIN PAGE -->
+      <div class="page" id="page-admin">
+        <div class="page-header">
+          <h2>Admin Panel</h2>
+          <p>Server configuration and management</p>
+        </div>
+
+        <div class="admin-grid">
+          <div class="card">
+            <div class="card-header"><h3>Server Settings</h3></div>
+            <div class="settings-form">
+              <div class="form-group">
+                <label>Server Name</label>
+                <input type="text" id="settingServerName" placeholder="NEXUS RP">
+              </div>
+              <div class="form-group">
+                <label>Server Description</label>
+                <textarea id="settingServerDesc" rows="3" placeholder="ER:LC Division description..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>Admin Password</label>
+                <input type="password" id="settingAdminPass" placeholder="New admin password...">
+              </div>
+              <div class="form-group">
+                <label>Discord Invite Link</label>
+                <input type="text" id="settingDiscord" placeholder="https://discord.gg/...">
+              </div>
+              <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h3>Danger Zone</h3></div>
+            <div class="danger-zone">
+              <div class="danger-item">
+                <div>
+                  <div class="danger-title">Clear All Patrols</div>
+                  <div class="danger-desc">Permanently delete all patrol logs</div>
+                </div>
+                <button class="btn-danger" onclick="clearData('patrols')">Clear</button>
+              </div>
+              <div class="danger-item">
+                <div>
+                  <div class="danger-title">Clear All Shifts</div>
+                  <div class="danger-desc">Permanently delete all shift records</div>
+                </div>
+                <button class="btn-danger" onclick="clearData('shifts')">Clear</button>
+              </div>
+              <div class="danger-item">
+                <div>
+                  <div class="danger-title">Reset Staff Roster</div>
+                  <div class="danger-desc">Remove all staff members</div>
+                </div>
+                <button class="btn-danger" onclick="clearData('staff')">Reset</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end page-container -->
+  </main>
+
+  <!-- MODALS -->
+  <!-- Add Staff Modal -->
+  <div class="modal-overlay" id="addStaffModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add Staff Member</h3>
+        <button class="modal-close" onclick="closeModal('addStaffModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Roblox Username *</label>
+          <input type="text" id="newStaffUsername" placeholder="Enter username...">
+        </div>
+        <div class="form-group">
+          <label>Rank *</label>
+          <select id="newStaffRank">
+            <option value="">Select rank...</option>
+            <option>Commissioner</option>
+            <option>Deputy Commissioner</option>
+            <option>Assistant Commissioner</option>
+            <option>Chief</option>
+            <option>Captain</option>
+            <option>Lieutenant</option>
+            <option>Sergeant</option>
+            <option>Corporal</option>
+            <option>Officer</option>
+            <option>Cadet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Department</label>
+          <select id="newStaffDept">
+            <option value="Police">Police Department</option>
+            <option value="Fire">Fire Department</option>
+            <option value="EMS">EMS</option>
+            <option value="Sheriff">Sheriff's Office</option>
+            <option value="DOT">Dept. of Transportation</option>
+            <option value="Command">Command Staff</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="newStaffNotes" rows="2" placeholder="Optional notes..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('addStaffModal')">Cancel</button>
+        <button class="btn-primary" onclick="addStaff()">Add Member</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log Patrol Modal -->
+  <div class="modal-overlay" id="addPatrolModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Log Patrol</h3>
+        <button class="modal-close" onclick="closeModal('addPatrolModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Patrol Type *</label>
+          <select id="newPatrolType">
+            <option value="">Select type...</option>
+            <option>Standard</option>
+            <option>Traffic</option>
+            <option>Pursuit</option>
+            <option>Response</option>
+            <option>K9</option>
+            <option>SWAT</option>
+            <option>Detective</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea id="newPatrolDesc" rows="3" placeholder="Describe the patrol activity..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Duration (minutes)</label>
+          <input type="number" id="newPatrolDuration" placeholder="e.g. 45" min="1">
+        </div>
+        <div class="form-group">
+          <label>Partner (optional)</label>
+          <input type="text" id="newPatrolPartner" placeholder="Username of partner...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('addPatrolModal')">Cancel</button>
+        <button class="btn-primary" onclick="addPatrol()">Submit Log</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Announcement Modal -->
+  <div class="modal-overlay" id="addAnnouncementModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>New Announcement</h3>
+        <button class="modal-close" onclick="closeModal('addAnnouncementModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" id="newAnnTitle" placeholder="Announcement title...">
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <select id="newAnnPriority">
+            <option value="info">Info</option>
+            <option value="notice">Notice</option>
+            <option value="alert">Alert</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Content *</label>
+          <textarea id="newAnnContent" rows="5" placeholder="Write your announcement here..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('addAnnouncementModal')">Cancel</button>
+        <button class="btn-primary" onclick="addAnnouncement()">Publish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shift End Notes Modal -->
+  <div class="modal-overlay" id="endShiftModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>End Shift</h3>
+        <button class="modal-close" onclick="closeModal('endShiftModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Shift Notes (optional)</label>
+          <textarea id="shiftNotes" rows="3" placeholder="Any notes about this shift?"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('endShiftModal')">Cancel</button>
+        <button class="btn-danger" onclick="endShiftConfirm()">End Shift</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/staff.js"></script>
+  <script src="js/shifts.js"></script>
+  <script src="js/patrols.js"></script>
+  <script src="js/announcements.js"></script>
+</body>
+</html>
